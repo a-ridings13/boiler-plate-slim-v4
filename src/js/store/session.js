@@ -19,6 +19,9 @@ export default {
       }
 
       return (moment(state.expires).diff(moment().unix()) > 0)
+    },
+    accessToken(state) {
+      return state.access_token
     }
   },
   mutations: {
