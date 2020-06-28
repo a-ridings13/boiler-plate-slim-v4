@@ -47,7 +47,8 @@ final class AuthorizeController extends Controller
             );
 
             return $response->write($this->view->render('OAuth/Login', [
-                'failed' => '1'
+                'failed' => '1',
+                'auth' => []
             ]));
         }
 
@@ -98,7 +99,9 @@ final class AuthorizeController extends Controller
                     ]
                 ]);
 
-                return $response->write($guzzleResponse->getBody()->getContents());
+                return $response->write($this->view->render('OAuth/Login', [
+                    'auth' => $guzzleResponse->getBody()->getContents()
+                ]));
             } catch (ClientException $exception) {
                 return $response->write('unable to trade code for token: '. $exception->getResponse()->getBody());
             }
@@ -109,7 +112,9 @@ final class AuthorizeController extends Controller
 
             $this->session->set('auth', serialize($auth));
 
-            return $response->write($this->view->render('OAuth/Login'));
+            return $response->write($this->view->render('OAuth/Login', [
+                'auth' => []
+            ]));
         } catch (OAuthServerException $e) {
             Core::di()->log->warning($e->getMessage() . ' ' . $e->getHint());
 
