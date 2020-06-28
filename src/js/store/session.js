@@ -1,19 +1,15 @@
 import moment from 'moment'
 import Vue from 'vue'
 
-const DEFAULT_SESSION = {
-  access_token: '',
-  expires: 0,
-  expires_in: 0,
-  refresh_token: '',
-  token_type: 'Bearer'
-}
-
 export default {
   namespaced: true,
   state: () => {
     return {
-      DEFAULT_SESSION
+      access_token: '',
+      expires: 0,
+      expires_in: 0,
+      refresh_token: '',
+      token_type: 'Bearer'
     }
   },
   getters: {
@@ -34,14 +30,21 @@ export default {
       Vue.set(state, 'token_type', tokenPayload.token_type)
     },
     setSession: (state, session) => {
-      Object.keys(session).forEach(k => {
-        Vue.set(state, k, session[k])
-      })
+      Vue.set(state, 'access_token', session.access_token)
+      Vue.set(state, 'expires', session.expires)
+      Vue.set(state, 'expires_in', session.expires_in)
+      Vue.set(state, 'refresh_token', session.refresh_token)
+      Vue.set(state, 'token_type', session.token_type)
     }
   },
   actions: {
     logout({ commit }) {
-      commit('setSession', DEFAULT_SESSION)
+      commit('setSession', { access_token: '',
+        expires: 0,
+        expires_in: 0,
+        refresh_token: '',
+        token_type: 'Bearer'
+      })
     }
   }
 }
