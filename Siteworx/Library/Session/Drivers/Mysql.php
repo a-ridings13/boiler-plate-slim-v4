@@ -16,12 +16,12 @@ final class Mysql extends SessionDriver
     /**
      * @var Session;
      */
-    private $sessionModel;
+    private ?Session $sessionModel = null;
 
     /**
      * @var array
      */
-    private $sessionData = [];
+    private array $sessionData = [];
 
     private function fetchSessionModel(): void
     {
@@ -91,6 +91,7 @@ final class Mysql extends SessionDriver
 
     /**
      * @return string
+     * @throws \JsonException
      */
     public function toJson(): string
     {

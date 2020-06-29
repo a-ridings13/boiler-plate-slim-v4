@@ -41,19 +41,19 @@ final class OAuthMiddleware extends Middleware
                 ->generateHttpResponse(ResponseFactory::factory());
         }
 
-        Core::di()['client'] = function () use ($request) {
+        Core::di()['client'] = static function () use ($request) {
             $headers = $request->getAttributes();
 
             return Client::where('client_id', $headers['oauth_client_id'])->get()->first();
         };
 
-        Core::di()['user'] = function () use ($request) {
+        Core::di()['user'] = static function () use ($request) {
             $headers = $request->getAttributes();
 
             return User::find($headers['oauth_user_id'] ?? 0);
         };
 
-        Core::di()['accessToken'] = function () use ($request) {
+        Core::di()['accessToken'] = static function () use ($request) {
             $headers = $request->getAttributes();
 
             return AccessToken::where('token', '=', $headers['oauth_access_token_id'])->get()->first();

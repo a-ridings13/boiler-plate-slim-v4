@@ -85,11 +85,11 @@ final class Container extends Pimple implements ContainerInterface
 
     private function bootstrap(): void
     {
-        $this['response'] = function () {
+        $this['response'] = static function () {
             return new ResponseFactory();
         };
 
-        $this['request'] = function () {
+        $this['request'] = static function () {
             return RequestFactory::createFromGlobals();
         };
 
@@ -250,7 +250,7 @@ final class Container extends Pimple implements ContainerInterface
         | Session
         |--------------------------------------------------------------------------
         */
-        $this['session'] = function () {
+        $this['session'] = static function () {
             $driver = new Mysql();
 
             return new Session($driver);
@@ -261,7 +261,7 @@ final class Container extends Pimple implements ContainerInterface
         | Resource Server
         |--------------------------------------------------------------------------
         */
-        $this['resourceserver'] = function () {
+        $this['resourceserver'] = function (): ResourceServer {
             $accessTokenRepository = new AccessTokenRepository();
             $privateKey = $this->config->get('run_dir') . '/authorization.key';
 
@@ -320,7 +320,7 @@ final class Container extends Pimple implements ContainerInterface
         | Command Bus
         |--------------------------------------------------------------------------
         */
-        $this['commandBus'] = function () {
+        $this['commandBus'] = static function () {
             $commands = [];
 
             $handlerMiddleware = new CommandHandlerMiddleware(
