@@ -14,17 +14,17 @@ abstract class SessionDriver implements SessionDriverInterface
     /**
      * @var string
      */
-    protected $sessionKey;
+    protected string $sessionKey = '';
 
     /**
      * @var string
      */
-    protected $ip;
+    protected string $ip = '';
 
     /**
      * @var string
      */
-    protected $userAgent;
+    protected string $userAgent = '';
 
     /**
      * @param mixed $sessionKey
