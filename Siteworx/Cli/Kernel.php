@@ -125,10 +125,9 @@ final class Kernel
 
         if ($code !== 0) {
             $this->cli->out('<red><blink>Error!!</blink> Job <bold>FAILED!</bold></red>')->br();
-            exit($code);
+        } else {
+            $this->cli->out('<green>Job Completed <bold>Successfully!</bold></green>');
         }
-
-        $this->cli->out('<green>Job Completed <bold>Successfully!</bold></green>');
 
         $time = microtime(true) - $startTime;
 
