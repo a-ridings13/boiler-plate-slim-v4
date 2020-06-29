@@ -66,11 +66,10 @@ final class CreateClient extends Command
             $clientName = $this->cli->arguments->get('clientName');
         }
 
-
         $clientId = Helpers::generateRandString(32);
         $clientSecret = Helpers::generateRandString(64);
 
-        if (!\in_array($this->cli->arguments->get('grant'), Client::grants())) {
+        if (!\in_array($this->cli->arguments->get('grant'), Client::grants(), true)) {
             /** @var Input $prompt */
             $prompt = $this->cli->input('Grant (' . implode(', ', Client::grants()) . '): ');
             $prompt->accept(Client::grants());
@@ -102,7 +101,6 @@ final class CreateClient extends Command
         $this->cli->info('Client Secret: ' . $clientSecret);
 
         if ($this->cli->arguments->get('writeToEnv')) {
-
             if (!file_exists('./.env')) {
                 file_put_contents('./.env', file_get_contents('./.env.template'));
             }

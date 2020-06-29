@@ -103,7 +103,7 @@ final class AuthorizeController extends Controller
                     'auth' => $guzzleResponse->getBody()->getContents()
                 ]));
             } catch (ClientException $exception) {
-                return $response->write('unable to trade code for token: '. $exception->getResponse()->getBody());
+                return $response->write('unable to trade code for token: ' . $exception->getResponse()->getBody());
             }
         }
 
